@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.5.2/dist/web3.min.js"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-12">
+                <h1>Secure Voting System</h1>
+                <p class="blockchain-info" id="blockchainStatus">Connecting to network...</p>
+            </div>
+        </div>
+
+        <div class="row main-content">
+            <div class="col-md-3 left-nav">
+                <a href="voter_registration.html" class="nav-item">
+                    <i class="bi bi-person-plus"></i> Voter Registration
+                </a>
+                <a href="voter_login.html" class="nav-item">
+                    <i class="bi bi-person-check"></i> Voter Login
+                </a>
+                <a href="voting_area.html" class="nav-item">
+                    <i class="bi bi-check2-square"></i> Voting Area
+                </a>
+                <a href="candidate_portal.html" class="nav-item">
+                    <i class="bi bi-people"></i> Candidate Portal
+                </a>
+                <a href="blockchain_info.html" class="nav-item">
+                    <i class="bi bi-link-45deg"></i> Network Info
+                </a>
+            </div>
+
+            <div class="col-md-9 content-area">
+                <div class="welcome-message">
+                    <h2>Welcome to the Voting System</h2>
+                    <div class="system-stats">
+                        <div class="stat-card">
+                            <i class="bi bi-people"></i>
+                            <h3 id="candidateCount">0</h3>
+                            <p>Candidates</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="bi bi-person-check"></i>
+                            <h3 id="voterCount">0</h3>
+                            <p>Registered Voters</p>
+                        </div>
+                        <div class="stat-card">
+                            <i class="bi bi-check2-circle"></i>
+                            <h3 id="voteCount">0</h3>
+                            <p>Votes Cast</p>
+                        </div>
+                    </div>
+                    <div class="recent-transactions mt-4">
+                        <h4>Recent Transactions</h4>
+                        <div class="transaction-list" id="transactionList">
+                            <!-- Transactions will load here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="blockchain.js"></script>
+    <script src="script.js"></script>
+    <script src="server.js"></script>
+</body>
+</html>

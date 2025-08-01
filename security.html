@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Center | Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .security-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .threat-alert {
+            background: linear-gradient(135deg, #ff7675, #d63031);
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+        .security-metric {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .security-metric:hover {
+            transform: translateY(-5px);
+        }
+        .biometric-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        .status-active {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+        .status-warning {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+        }
+        .status-danger {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+        .security-log {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4361ee;
+        }
+        .encryption-indicator {
+            width: 100%;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        .encryption-level {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-12">
+                <h1>Secure Voting System</h1>
+                <p class="blockchain-info">
+                    <span class="real-time-indicator"></span> 
+                    Powered by Secure Network | AI-Powered Security | Real-time Threat Detection
+                </p>
+            </div>
+        </div>
+
+        <div class="row main-content">
+            <!-- Left Navigation -->
+            <div class="col-md-3 left-nav">
+                <a href="add_candidate.html" class="nav-item">
+                    <i class="bi bi-person-plus"></i> Add Candidate
+                </a>
+                <a href="candidate_portal.html" class="nav-item">
+                    <i class="bi bi-people"></i> Candidate Portal
+                </a>
+                <a href="user_info.html" class="nav-item">
+                    <i class="bi bi-person-badge"></i> User Information
+                </a>
+                <a href="blockchain_info.html" class="nav-item">
+                    <i class="bi bi-link-45deg"></i> Network Info
+                </a>
+                <a href="analytics.html" class="nav-item">
+                    <i class="bi bi-graph-up"></i> Advanced Analytics
+                </a>
+                <a href="security.html" class="nav-item active">
+                    <i class="bi bi-shield-check"></i> Security Center
+                </a>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 content-area">
+                <h2><i class="bi bi-shield-check"></i> Security Center</h2>
+                
+                <!-- Security Overview -->
+                <div class="security-card">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5><i class="bi bi-shield-lock"></i> Real-time Security Monitoring</h5>
+                            <p class="mb-2">Advanced threat detection system actively monitoring for suspicious activities, unauthorized access attempts, and potential security breaches.</p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="biometric-status status-active">
+                                        <i class="bi bi-shield-check"></i>
+                                        <span>System Secure</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="biometric-status status-warning">
+                                        <i class="bi bi-exclamation-triangle"></i>
+                                        <span>2 Threats Detected</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="biometric-status status-active">
+                                        <i class="bi bi-fingerprint"></i>
+                                        <span>Biometric Active</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="qr-code">
+                                <i class="bi bi-qr-code" style="font-size: 2rem;"></i>
+                            </div>
+                            <small>Security Access Code</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Threat Alert -->
+                <div class="threat-alert">
+                    <h6><i class="bi bi-exclamation-triangle"></i> Security Alert - High Priority</h6>
+                    <p class="mb-1">Multiple login attempts detected from unknown IP address (192.168.1.100). Account temporarily locked for security.</p>
+                    <small>Action required: Verify identity through biometric authentication or contact security team.</small>
+                </div>
+
+                <!-- Security Metrics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="security-metric text-center">
+                            <i class="bi bi-shield-check text-success" style="font-size: 2rem;"></i>
+                            <h3>99.7%</h3>
+                            <p class="mb-0">Security Score</p>
+                            <small class="text-success">Excellent</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="security-metric text-center">
+                            <i class="bi bi-eye text-info" style="font-size: 2rem;"></i>
+                            <h3>2</h3>
+                            <p class="mb-0">Active Threats</p>
+                            <small class="text-warning">Low Risk</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="security-metric text-center">
+                            <i class="bi bi-fingerprint text-primary" style="font-size: 2rem;"></i>
+                            <h3>1,247</h3>
+                            <p class="mb-0">Biometric Verifications</p>
+                            <small class="text-success">Today</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="security-metric text-center">
+                            <i class="bi bi-clock-history text-warning" style="font-size: 2rem;"></i>
+                            <h3>24s</h3>
+                            <p class="mb-0">Response Time</p>
+                            <small class="text-success">Fast</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Features -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-shield-lock"></i> Security Features</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <h6><i class="bi bi-fingerprint"></i> Biometric Authentication</h6>
+                                        <div class="mb-3">
+                                            <div class="encryption-indicator">
+                                                <div class="encryption-level" style="width: 95%;"></div>
+                                            </div>
+                                            <small class="text-success">95% Accuracy Rate</small>
+                                        </div>
+                                        
+                                        <h6><i class="bi bi-key"></i> Multi-Factor Authentication</h6>
+                                        <div class="mb-3">
+                                            <div class="encryption-indicator">
+                                                <div class="encryption-level" style="width: 100%;"></div>
+                                            </div>
+                                            <small class="text-success">100% Active</small>
+                                        </div>
+                                        
+                                        <h6><i class="bi bi-lock"></i> End-to-End Encryption</h6>
+                                        <div class="mb-3">
+                                            <div class="encryption-indicator">
+                                                <div class="encryption-level" style="width: 100%;"></div>
+                                            </div>
+                                            <small class="text-success">AES-256 Encryption</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <h6><i class="bi bi-eye"></i> Real-time Monitoring</h6>
+                                        <div class="mb-3">
+                                            <div class="encryption-indicator">
+                                                <div class="encryption-level" style="width: 100%;"></div>
+                                            </div>
+                                            <small class="text-success">24/7 Active</small>
+                                        </div>
+                                        
+                                        <h6><i class="bi bi-shield-check"></i> Threat Detection</h6>
+                                        <div class="mb-3">
+                                            <div class="encryption-indicator">
+                                                <div class="encryption-level" style="width: 88%;"></div>
+                                            </div>
+                                            <small class="text-warning">88% Detection Rate</small>
+                                        </div>
+                                        
+                                        <h6><i class="bi bi-gear"></i> System Integrity</h6>
+                                        <div class="mb-3">
+                                            <div class="encryption-indicator">
+                                                <div class="encryption-level" style="width: 99%;"></div>
+                                            </div>
+                                            <small class="text-success">99% Integrity</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-table"></i> Security Logs</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="securityLogs">
+                                    <!-- Security logs will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-graph-up"></i> Security Analytics</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="securityChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-geo-alt"></i> Threat Map</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <i class="bi bi-globe" style="font-size: 3rem; color: #4361ee;"></i>
+                                    <p class="mt-2">Real-time threat visualization</p>
+                                    <div class="row text-center">
+                                        <div class="col-6">
+                                            <h6>2</h6>
+                                            <small>Active Threats</small>
+                                        </div>
+                                        <div class="col-6">
+                                            <h6>15</h6>
+                                            <small>Blocked Attempts</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-shield-check"></i> Security Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <small>Firewall Protection</small>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Intrusion Detection</small>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Data Encryption</small>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Access Control</small>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 98%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Security logs data
+        const securityLogs = [
+            { time: "2 minutes ago", event: "Biometric verification successful", user: "Rahul Sharma", type: "success" },
+            { time: "5 minutes ago", event: "Suspicious login attempt blocked", user: "Unknown IP", type: "warning" },
+            { time: "8 minutes ago", event: "Multi-factor authentication completed", user: "Priya Patel", type: "success" },
+            { time: "12 minutes ago", event: "Security scan completed", user: "System", type: "info" },
+            { time: "15 minutes ago", event: "Firewall updated", user: "System", type: "info" },
+            { time: "20 minutes ago", event: "Encryption key rotated", user: "System", type: "success" }
+        ];
+
+        // Load security logs
+        function loadSecurityLogs() {
+            const logsContainer = document.getElementById('securityLogs');
+            logsContainer.innerHTML = securityLogs.map(log => {
+                const iconClass = log.type === 'success' ? 'bi-check-circle text-success' :
+                                log.type === 'warning' ? 'bi-exclamation-triangle text-warning' :
+                                log.type === 'danger' ? 'bi-x-circle text-danger' :
+                                'bi-info-circle text-info';
+                
+                return `
+                    <div class="security-log">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <i class="bi ${iconClass}"></i>
+                                <strong>${log.event}</strong>
+                            </div>
+                            <small class="text-muted">${log.time}</small>
+                        </div>
+                        <small class="text-muted">${log.user}</small>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize security chart
+        function initializeSecurityChart() {
+            const ctx = document.getElementById('securityChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Secure', 'Threats', 'Blocked'],
+                    datasets: [{
+                        data: [85, 10, 5],
+                        backgroundColor: [
+                            '#28a745',
+                            '#ffc107',
+                            '#dc3545'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Real-time security updates
+        function updateSecurityMetrics() {
+            // Simulate real-time security updates
+            const threatCount = document.querySelector('.security-metric h3');
+            const currentThreats = parseInt(threatCount.textContent);
+            const newThreats = Math.random() > 0.7 ? currentThreats + 1 : currentThreats;
+            threatCount.textContent = newThreats;
+            
+            // Update security score
+            const securityScore = document.querySelectorAll('.security-metric h3')[0];
+            const currentScore = parseFloat(securityScore.textContent);
+            const newScore = Math.max(95, currentScore + (Math.random() - 0.5) * 2);
+            securityScore.textContent = newScore.toFixed(1) + '%';
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            loadSecurityLogs();
+            initializeSecurityChart();
+            
+            // Update security metrics every 30 seconds
+            setInterval(updateSecurityMetrics, 30000);
+        });
+    </script>
+</body>
+</html> 

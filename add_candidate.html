@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Candidate | Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .form-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .form-section h5 {
+            color: #4361ee;
+            border-bottom: 2px solid #4361ee;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .upload-area {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            background: #f8f9fa;
+            transition: all 0.3s;
+        }
+        .upload-area:hover {
+            border-color: #4361ee;
+            background: #e3f2fd;
+        }
+        .upload-area.dragover {
+            border-color: #4361ee;
+            background: #e3f2fd;
+        }
+        .preview-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+        .party-logo-preview {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-12">
+                <h1>Secure Voting System</h1>
+                <p class="blockchain-info">Powered by Secure Network | Immutable | Transparent | Secure</p>
+            </div>
+        </div>
+
+        <div class="row main-content">
+            <!-- Left Navigation -->
+            <div class="col-md-3 left-nav">
+                <a href="add_candidate.html" class="nav-item active">
+                    <i class="bi bi-person-plus"></i> Add Candidate
+                </a>
+                <a href="candidate_portal.html" class="nav-item">
+                    <i class="bi bi-people"></i> Candidate Portal
+                </a>
+                <a href="user_info.html" class="nav-item">
+                    <i class="bi bi-person-badge"></i> User Information
+                </a>
+                <a href="blockchain_info.html" class="nav-item">
+                    <i class="bi bi-link-45deg"></i> Network Info
+                </a>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 content-area">
+                <h2><i class="bi bi-person-plus"></i> Add New Candidate</h2>
+                
+                <form id="candidateForm">
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                        <h5><i class="bi bi-person"></i> Personal Information</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="firstName" class="form-label">First Name *</label>
+                                    <input type="text" class="form-control" id="firstName" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="lastName" class="form-label">Last Name *</label>
+                                    <input type="text" class="form-control" id="lastName" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="dateOfBirth" class="form-label">Date of Birth *</label>
+                                    <input type="date" class="form-control" id="dateOfBirth" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="gender" class="form-label">Gender *</label>
+                                    <select class="form-select" id="gender" required>
+                                        <option value="">Select Gender</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="phone" class="form-label">Phone Number *</label>
+                                    <input type="tel" class="form-control" id="phone" placeholder="+91-XXXXXXXXXX" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="email" class="form-label">Email Address *</label>
+                                    <input type="email" class="form-control" id="email" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address *</label>
+                            <textarea class="form-control" id="address" rows="3" required></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Party Information -->
+                    <div class="form-section">
+                        <h5><i class="bi bi-flag"></i> Party Information</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="partyName" class="form-label">Political Party *</label>
+                                    <select class="form-select" id="partyName" required>
+                                        <option value="">Select Party</option>
+                                        <option value="BJP">Bharatiya Janata Party (BJP)</option>
+                                        <option value="Congress">Indian National Congress (INC)</option>
+                                        <option value="TRS">Telangana Rashtra Samithi (TRS)</option>
+                                        <option value="TDP">Telugu Desam Party (TDP)</option>
+                                        <option value="YSRCP">YSR Congress Party (YSRCP)</option>
+                                        <option value="Other">Other Party</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="constituency" class="form-label">Constituency *</label>
+                                    <input type="text" class="form-control" id="constituency" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="candidateId" class="form-label">Candidate ID *</label>
+                                    <input type="text" class="form-control" id="candidateId" placeholder="CAN12345678" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="aadharNumber" class="form-label">Aadhar Number *</label>
+                                    <input type="text" class="form-control" id="aadharNumber" placeholder="123456789012" maxlength="12" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="partyLogo" class="form-label">Party Logo</label>
+                            <div class="upload-area" id="partyLogoUpload">
+                                <i class="bi bi-upload" style="font-size: 2rem; color: #6c757d;"></i>
+                                <p class="mt-2">Click to upload or drag and drop</p>
+                                <input type="file" id="partyLogo" accept="image/*" style="display: none;">
+                            </div>
+                            <div id="partyLogoPreview" style="display: none;">
+                                <img id="partyLogoImg" class="party-logo-preview">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Documents -->
+                    <div class="form-section">
+                        <h5><i class="bi bi-file-earmark"></i> Documents</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="candidatePhoto" class="form-label">Candidate Photo *</label>
+                                    <div class="upload-area" id="photoUpload">
+                                        <i class="bi bi-camera" style="font-size: 2rem; color: #6c757d;"></i>
+                                        <p class="mt-2">Upload candidate photo</p>
+                                        <input type="file" id="candidatePhoto" accept="image/*" style="display: none;">
+                                    </div>
+                                    <div id="photoPreview" style="display: none;">
+                                        <img id="candidatePhotoImg" class="preview-image">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label for="aadharCard" class="form-label">Aadhar Card *</label>
+                                    <div class="upload-area" id="aadharUpload">
+                                        <i class="bi bi-card-text" style="font-size: 2rem; color: #6c757d;"></i>
+                                        <p class="mt-2">Upload Aadhar card</p>
+                                        <input type="file" id="aadharCard" accept="image/*" style="display: none;">
+                                    </div>
+                                    <div id="aadharPreview" style="display: none;">
+                                        <img id="aadharCardImg" class="preview-image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Declaration -->
+                    <div class="form-section">
+                        <h5><i class="bi bi-check-circle"></i> Declaration</h5>
+                        <div class="mb-3">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="declaration" required>
+                                <label class="form-check-label" for="declaration">
+                                    I hereby declare that all the information provided above is true and correct to the best of my knowledge. I understand that any false information may result in disqualification.
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit Buttons -->
+                    <div class="text-center">
+                        <button type="button" class="btn btn-secondary me-2" onclick="resetForm()">
+                            <i class="bi bi-arrow-clockwise"></i> Reset Form
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-check-circle"></i> Register Candidate
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="mb-4">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    <h4 class="mb-3">Candidate Registered Successfully!</h4>
+                    <p class="mb-4">The candidate has been added to the voting system.</p>
+                    <div class="mt-4">
+                        <a href="candidate_portal.html" class="btn btn-primary me-2">
+                            <i class="bi bi-people"></i> View All Candidates
+                        </a>
+                        <button type="button" class="btn btn-outline-primary" onclick="resetForm()">
+                            <i class="bi bi-plus-circle"></i> Add Another
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // File upload handlers
+        function setupFileUpload(inputId, previewId, previewImgId, uploadAreaId) {
+            const input = document.getElementById(inputId);
+            const preview = document.getElementById(previewId);
+            const previewImg = document.getElementById(previewImgId);
+            const uploadArea = document.getElementById(uploadAreaId);
+
+            uploadArea.addEventListener('click', () => input.click());
+            
+            uploadArea.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+            
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+            
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    input.files = files;
+                    handleFileSelect(input, preview, previewImg);
+                }
+            });
+            
+            input.addEventListener('change', () => {
+                handleFileSelect(input, preview, previewImg);
+            });
+        }
+
+        function handleFileSelect(input, preview, previewImg) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImg.src = e.target.result;
+                    preview.style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Form submission
+        document.getElementById('candidateForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (!this.checkValidity()) {
+                e.stopPropagation();
+                this.classList.add('was-validated');
+                return;
+            }
+            
+            // Collect form data
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                dateOfBirth: document.getElementById('dateOfBirth').value,
+                gender: document.getElementById('gender').value,
+                phone: document.getElementById('phone').value,
+                email: document.getElementById('email').value,
+                address: document.getElementById('address').value,
+                partyName: document.getElementById('partyName').value,
+                constituency: document.getElementById('constituency').value,
+                candidateId: document.getElementById('candidateId').value,
+                aadharNumber: document.getElementById('aadharNumber').value
+            };
+            
+            // Simulate registration process
+            const submitBtn = document.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Registering...';
+            
+            setTimeout(() => {
+                // Store candidate data in localStorage for the candidate portal to access
+                const candidateData = {
+                    firstName: formData.firstName,
+                    lastName: formData.lastName,
+                    dateOfBirth: formData.dateOfBirth,
+                    gender: formData.gender,
+                    phone: formData.phone,
+                    email: formData.email,
+                    address: formData.address,
+                    partyName: formData.partyName,
+                    constituency: formData.constituency,
+                    candidateId: formData.candidateId,
+                    aadharNumber: formData.aadharNumber
+                };
+                
+                // Store in localStorage
+                const existingCandidates = JSON.parse(localStorage.getItem('candidates') || '[]');
+                existingCandidates.push(candidateData);
+                localStorage.setItem('candidates', JSON.stringify(existingCandidates));
+                
+                // Show success modal
+                const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+                successModal.show();
+                
+                // Reset form
+                resetForm();
+                
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="bi bi-check-circle"></i> Register Candidate';
+            }, 2000);
+        });
+
+        function resetForm() {
+            document.getElementById('candidateForm').reset();
+            document.getElementById('candidateForm').classList.remove('was-validated');
+            
+            // Hide all previews
+            document.getElementById('photoPreview').style.display = 'none';
+            document.getElementById('aadharPreview').style.display = 'none';
+            document.getElementById('partyLogoPreview').style.display = 'none';
+        }
+
+        // Initialize file uploads
+        document.addEventListener('DOMContentLoaded', function() {
+            setupFileUpload('candidatePhoto', 'photoPreview', 'candidatePhotoImg', 'photoUpload');
+            setupFileUpload('aadharCard', 'aadharPreview', 'aadharCardImg', 'aadharUpload');
+            setupFileUpload('partyLogo', 'partyLogoPreview', 'partyLogoImg', 'partyLogoUpload');
+        });
+    </script>
+</body>
+</html> 

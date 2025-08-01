@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Information | Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .user-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .user-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid white;
+            object-fit: cover;
+        }
+        .stats-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .stats-card:hover {
+            transform: translateY(-5px);
+        }
+        .ai-insight-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .real-time-indicator {
+            width: 10px;
+            height: 10px;
+            background: #28a745;
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .voter-details-modal .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .voter-details-modal .detail-group {
+            margin-bottom: 1rem;
+        }
+        .voter-details-modal .detail-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .voter-photo-lg {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto;
+            display: block;
+        }
+        .aadhar-photo {
+            max-width: 100%;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .voting-history-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4361ee;
+        }
+        .ai-prediction {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .security-alert {
+            background: linear-gradient(135deg, #ff7675, #d63031);
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .biometric-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .qr-code {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-12">
+                <h1>Secure Voting System</h1>
+                <p class="blockchain-info">
+                    <span class="real-time-indicator"></span> 
+                    Powered by Secure Network | AI-Powered Analytics | Real-time Monitoring
+                </p>
+            </div>
+        </div>
+
+        <div class="row main-content">
+            <!-- Left Navigation -->
+            <div class="col-md-3 left-nav">
+                <a href="add_candidate.html" class="nav-item">
+                    <i class="bi bi-person-plus"></i> Add Candidate
+                </a>
+                <a href="candidate_portal.html" class="nav-item">
+                    <i class="bi bi-people"></i> Candidate Portal
+                </a>
+                <a href="user_info.html" class="nav-item active">
+                    <i class="bi bi-person-badge"></i> User Information
+                </a>
+                <a href="blockchain_info.html" class="nav-item">
+                    <i class="bi bi-link-45deg"></i> Network Info
+                </a>
+                <a href="analytics.html" class="nav-item">
+                    <i class="bi bi-graph-up"></i> Advanced Analytics
+                </a>
+                <a href="security.html" class="nav-item">
+                    <i class="bi bi-shield-check"></i> Security Center
+                </a>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 content-area">
+                <h2><i class="bi bi-person-badge"></i> User Information Dashboard</h2>
+                
+                <!-- AI-Powered Insights -->
+                <div class="ai-insight-card">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5><i class="bi bi-robot"></i> AI-Powered Insights</h5>
+                            <p class="mb-2">Based on voting patterns and demographic analysis, we predict a <strong>15% increase</strong> in voter turnout this election cycle.</p>
+                            <small>Last updated: <span id="aiLastUpdate">Just now</span></small>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="qr-code">
+                                <i class="bi bi-qr-code" style="font-size: 2rem;"></i>
+                            </div>
+                            <small>Scan for mobile access</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Current User Info -->
+                <div class="user-card">
+                    <div class="row align-items-center">
+                        <div class="col-md-3 text-center">
+                            <img src="data:image/jpeg;base64,..." alt="User Avatar" class="user-avatar mb-3">
+                            <h4 id="currentUserName">Loading...</h4>
+                            <p class="mb-0" id="currentUserRole">Voter</p>
+                            <div class="biometric-status">
+                                <i class="bi bi-fingerprint text-success"></i>
+                                <span>Biometric Verified</span>
+                            </div>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <p><strong>Voter ID:</strong> <span id="currentUserVoterId">Loading...</span></p>
+                                    <p><strong>Status:</strong> <span class="status-badge bg-success" id="currentUserStatus">Active</span></p>
+                                    <p><strong>Registration Date:</strong> <span id="currentUserRegDate">Loading...</span></p>
+                                    <p><strong>Security Level:</strong> <span class="badge bg-warning">Enhanced</span></p>
+                                </div>
+                                <div class="col-md-6">
+                                    <p><strong>Last Login:</strong> <span id="currentUserLastLogin">Loading...</span></p>
+                                    <p><strong>Constituency:</strong> <span id="currentUserConstituency">Loading...</span></p>
+                                    <p><strong>Voting History:</strong> <span id="currentUserVoteCount">0 votes</span></p>
+                                    <p><strong>Device:</strong> <span class="badge bg-info">Multi-factor Auth</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Alerts -->
+                <div class="security-alert">
+                    <h6><i class="bi bi-shield-exclamation"></i> Security Alert</h6>
+                    <p class="mb-1">Multiple login attempts detected from unknown location. Account temporarily secured.</p>
+                    <small>Action required: Verify your identity through biometric authentication.</small>
+                </div>
+
+                <!-- Statistics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="stats-card text-center">
+                            <i class="bi bi-people-fill text-primary" style="font-size: 2rem;"></i>
+                            <h3 id="totalVoters">0</h3>
+                            <p class="mb-0">Total Voters</p>
+                            <small class="text-success">+5% this week</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card text-center">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                            <h3 id="activeVoters">0</h3>
+                            <p class="mb-0">Active Voters</p>
+                            <small class="text-success">+12% this month</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card text-center">
+                            <i class="bi bi-calendar-check text-info" style="font-size: 2rem;"></i>
+                            <h3 id="recentRegistrations">0</h3>
+                            <p class="mb-0">Recent Registrations</p>
+                            <small class="text-info">Last 24 hours</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stats-card text-center">
+                            <i class="bi bi-graph-up text-warning" style="font-size: 2rem;"></i>
+                            <h3 id="votingRate">0%</h3>
+                            <p class="mb-0">Voting Rate</p>
+                            <small class="text-warning">Target: 85%</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Predictions -->
+                <div class="ai-prediction">
+                    <h6><i class="bi bi-lightbulb"></i> AI Predictions</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>Voter Turnout:</strong> 78% (Predicted: 82%)
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Peak Voting Time:</strong> 2:00 PM - 4:00 PM
+                        </div>
+                        <div class="col-md-4">
+                            <strong>Security Threats:</strong> Low (2 incidents today)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Voter Management -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header d-flex justify-content-between align-items-center">
+                                <h5 class="mb-0"><i class="bi bi-people"></i> Registered Voters</h5>
+                                <div>
+                                    <button class="btn btn-success btn-sm me-2" onclick="exportVoterData()">
+                                        <i class="bi bi-download"></i> Export
+                                    </button>
+                                    <button class="btn btn-primary btn-sm" onclick="refreshVoterData()">
+                                        <i class="bi bi-arrow-clockwise"></i> Refresh
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="search-bar">
+                                        <input type="text" class="form-control" placeholder="Search voters..." id="voterSearch">
+                                    </div>
+                                    <div class="btn-group" role="group">
+                                        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="filterByStatus('all')">All</button>
+                                        <button type="button" class="btn btn-outline-success btn-sm" onclick="filterByStatus('active')">Active</button>
+                                        <button type="button" class="btn btn-outline-warning btn-sm" onclick="filterByStatus('inactive')">Inactive</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Voter ID</th>
+                                                <th>Name</th>
+                                                <th>Age</th>
+                                                <th>Gender</th>
+                                                <th>Status</th>
+                                                <th>Security</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="voterTableBody">
+                                            <!-- Voters will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Real-time Activity</h5>
+                            </div>
+                            <div class="card-body">
+                                <div id="recentActivity">
+                                    <!-- Recent activity will be loaded here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-graph-up"></i> Voting Trends</h5>
+                            </div>
+                            <div class="card-body">
+                                <canvas id="votingTrendsChart" width="300" height="200"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-shield-check"></i> Security Status</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-2">
+                                    <small>Biometric Authentication</small>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" style="width: 95%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Encryption Level</small>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-info" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <small>Network Security</small>
+                                    <div class="progress">
+                                        <div class="progress-bar bg-warning" style="width: 88%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Voter Details Modal -->
+    <div class="modal fade" id="voterDetailsModal" tabindex="-1" aria-labelledby="voterDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg voter-details-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="voterDetailsModalLabel">Voter Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="voterDetailsContent">
+                    <!-- Voter details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-warning" onclick="suspendVoter()">Suspend</button>
+                    <button type="button" class="btn btn-success" onclick="activateVoter()">Activate</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Enhanced voter data with security features
+        const voters = [
+            {
+                id: "VTR12345678",
+                name: "Rahul Sharma",
+                age: 28,
+                gender: "Male",
+                votingStatus: "Active",
+                securityLevel: "Enhanced",
+                biometricVerified: true,
+                suspiciousActivity: false
+            },
+            {
+                id: "VTR23456789",
+                name: "Priya Patel",
+                age: 32,
+                gender: "Female",
+                votingStatus: "Active",
+                securityLevel: "Standard",
+                biometricVerified: true,
+                suspiciousActivity: true
+            },
+            {
+                id: "VTR34567890",
+                name: "Amit Kumar",
+                age: 45,
+                gender: "Male",
+                votingStatus: "Suspended",
+                securityLevel: "Basic",
+                biometricVerified: false,
+                suspiciousActivity: true
+            }
+        ];
+
+        // Current user data
+        const currentUser = {
+            name: "Rahul Sharma",
+            voterId: "VTR12345678",
+            constituency: "Mumbai North",
+            registrationDate: "2023-01-10",
+            lastLogin: new Date().toLocaleString(),
+            voteCount: 3,
+            status: "Active"
+        };
+
+        // Initialize current user info
+        function initializeCurrentUser() {
+            document.getElementById('currentUserName').textContent = currentUser.name;
+            document.getElementById('currentUserVoterId').textContent = currentUser.voterId;
+            document.getElementById('currentUserConstituency').textContent = currentUser.constituency;
+            document.getElementById('currentUserRegDate').textContent = currentUser.registrationDate;
+            document.getElementById('currentUserLastLogin').textContent = currentUser.lastLogin;
+            document.getElementById('currentUserVoteCount').textContent = currentUser.voteCount + " votes";
+        }
+
+        // Render voter table with enhanced features
+        function renderVoterTable(data = voters) {
+            const tbody = document.getElementById('voterTableBody');
+            tbody.innerHTML = '';
+            
+            data.forEach(voter => {
+                const row = document.createElement('tr');
+                const securityIcon = voter.suspiciousActivity ? 'bi-exclamation-triangle text-danger' : 'bi-shield-check text-success';
+                const biometricIcon = voter.biometricVerified ? 'bi-fingerprint text-success' : 'bi-x-circle text-danger';
+                
+                row.innerHTML = `
+                    <td>${voter.id}</td>
+                    <td>${voter.name}</td>
+                    <td>${voter.age}</td>
+                    <td>${voter.gender}</td>
+                    <td><span class="badge ${voter.votingStatus === 'Active' ? 'bg-success' : voter.votingStatus === 'Suspended' ? 'bg-danger' : 'bg-warning'}">${voter.votingStatus}</span></td>
+                    <td>
+                        <i class="bi ${securityIcon}" title="${voter.suspiciousActivity ? 'Suspicious Activity Detected' : 'Secure'}"></i>
+                        <i class="bi ${biometricIcon}" title="${voter.biometricVerified ? 'Biometric Verified' : 'Biometric Not Verified'}"></i>
+                    </td>
+                    <td>
+                        <button class="btn btn-sm btn-primary view-details" data-id="${voter.id}">
+                            <i class="bi bi-eye"></i> View
+                        </button>
+                        <button class="btn btn-sm btn-warning" onclick="suspendVoter('${voter.id}')">
+                            <i class="bi bi-pause"></i>
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Update statistics
+        function updateStatistics() {
+            const totalVoters = voters.length;
+            const activeVoters = voters.filter(v => v.votingStatus === 'Active').length;
+            const recentVoters = 5; // Simulated data
+            const votingRate = Math.round((activeVoters / totalVoters) * 100);
+            
+            document.getElementById('totalVoters').textContent = totalVoters;
+            document.getElementById('activeVoters').textContent = activeVoters;
+            document.getElementById('recentRegistrations').textContent = recentVoters;
+            document.getElementById('votingRate').textContent = votingRate + '%';
+        }
+
+        // Load recent activity
+        function loadRecentActivity() {
+            const recentActivity = document.getElementById('recentActivity');
+            const activities = [
+                { time: "2 minutes ago", action: "Biometric verification successful", user: "Priya Patel", type: "security" },
+                { time: "5 minutes ago", action: "Vote cast successfully", user: "Rahul Sharma", type: "vote" },
+                { time: "8 minutes ago", action: "Suspicious activity detected", user: "Amit Kumar", type: "alert" },
+                { time: "15 minutes ago", action: "New voter registered", user: "System Admin", type: "registration" }
+            ];
+            
+            recentActivity.innerHTML = activities.map(activity => {
+                const iconClass = activity.type === 'security' ? 'bi-shield-check text-success' :
+                                activity.type === 'vote' ? 'bi-check-circle text-primary' :
+                                activity.type === 'alert' ? 'bi-exclamation-triangle text-danger' :
+                                'bi-person-plus text-info';
+                
+                return `
+                    <div class="voting-history-item">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <i class="bi ${iconClass}"></i>
+                                <strong>${activity.action}</strong>
+                            </div>
+                            <small class="text-muted">${activity.time}</small>
+                        </div>
+                        <small class="text-muted">${activity.user}</small>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Initialize voting trends chart
+        function initializeVotingTrendsChart() {
+            const ctx = document.getElementById('votingTrendsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Voter Registrations',
+                        data: [12, 19, 15, 25, 22, 30],
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Security Incidents',
+                        data: [2, 1, 3, 0, 1, 2],
+                        borderColor: '#ff6b6b',
+                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Filter voters by status
+        function filterByStatus(status) {
+            let filteredVoters;
+            if (status === 'all') {
+                filteredVoters = voters;
+            } else if (status === 'active') {
+                filteredVoters = voters.filter(v => v.votingStatus === 'Active');
+            } else if (status === 'inactive') {
+                filteredVoters = voters.filter(v => v.votingStatus !== 'Active');
+            }
+            renderVoterTable(filteredVoters);
+        }
+
+        // Export voter data
+        function exportVoterData() {
+            const csvContent = "data:text/csv;charset=utf-8," 
+                + "Voter ID,Name,Age,Gender,Status,Constituency,Party Preference\n"
+                + voters.map(v => `${v.id},${v.name},${v.age},${v.gender},${v.votingStatus},Mumbai North,BJP`).join("\n");
+            
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "voter_data.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Suspend voter
+        function suspendVoter(voterId) {
+            const voter = voters.find(v => v.id === voterId);
+            if (voter) {
+                voter.votingStatus = 'Suspended';
+                renderVoterTable();
+                updateStatistics();
+                alert(`Voter ${voter.name} has been suspended.`);
+            }
+        }
+
+        // Activate voter
+        function activateVoter(voterId) {
+            const voter = voters.find(v => v.id === voterId);
+            if (voter) {
+                voter.votingStatus = 'Active';
+                renderVoterTable();
+                updateStatistics();
+                alert(`Voter ${voter.name} has been activated.`);
+            }
+        }
+
+        // Search functionality
+        document.getElementById('voterSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredVoters = voters.filter(voter => 
+                voter.name.toLowerCase().includes(searchTerm) || 
+                voter.id.toLowerCase().includes(searchTerm)
+            );
+            renderVoterTable(filteredVoters);
+        });
+
+        // Refresh voter data
+        function refreshVoterData() {
+            renderVoterTable();
+            updateStatistics();
+            loadRecentActivity();
+            document.getElementById('aiLastUpdate').textContent = new Date().toLocaleTimeString();
+        }
+
+        // Real-time updates simulation
+        setInterval(() => {
+            // Simulate real-time updates
+            const randomVoter = voters[Math.floor(Math.random() * voters.length)];
+            if (randomVoter) {
+                randomVoter.lastLogin = new Date().toLocaleString();
+            }
+        }, 30000); // Update every 30 seconds
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCurrentUser();
+            renderVoterTable();
+            updateStatistics();
+            loadRecentActivity();
+            initializeVotingTrendsChart();
+        });
+    </script>
+</body>
+</html> 

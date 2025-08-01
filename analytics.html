@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Analytics | Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .analytics-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+        }
+        .metric-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        .prediction-card {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        .ai-insight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        .trend-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+        .trend-up {
+            background: rgba(40, 167, 69, 0.2);
+            color: #28a745;
+        }
+        .trend-down {
+            background: rgba(220, 53, 69, 0.2);
+            color: #dc3545;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-12">
+                <h1>Secure Voting System</h1>
+                <p class="blockchain-info">Powered by Secure Network | AI-Powered Analytics | Real-time Monitoring</p>
+            </div>
+        </div>
+
+        <div class="row main-content">
+            <!-- Left Navigation -->
+            <div class="col-md-3 left-nav">
+                <a href="add_candidate.html" class="nav-item">
+                    <i class="bi bi-person-plus"></i> Add Candidate
+                </a>
+                <a href="candidate_portal.html" class="nav-item">
+                    <i class="bi bi-people"></i> Candidate Portal
+                </a>
+                <a href="user_info.html" class="nav-item">
+                    <i class="bi bi-person-badge"></i> User Information
+                </a>
+                <a href="blockchain_info.html" class="nav-item">
+                    <i class="bi bi-link-45deg"></i> Network Info
+                </a>
+                <a href="analytics.html" class="nav-item active">
+                    <i class="bi bi-graph-up"></i> Advanced Analytics
+                </a>
+                <a href="security.html" class="nav-item">
+                    <i class="bi bi-shield-check"></i> Security Center
+                </a>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 content-area">
+                <h2><i class="bi bi-graph-up"></i> Advanced Analytics Dashboard</h2>
+                
+                <!-- AI-Powered Insights -->
+                <div class="analytics-card">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5><i class="bi bi-robot"></i> AI-Powered Predictive Analytics</h5>
+                            <p class="mb-2">Our advanced AI algorithms analyze voting patterns, demographic data, and historical trends to provide real-time predictions and insights.</p>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="trend-indicator trend-up">
+                                        <i class="bi bi-arrow-up"></i>
+                                        <span>+15% Voter Turnout</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="trend-indicator trend-up">
+                                        <i class="bi bi-arrow-up"></i>
+                                        <span>+8% Registration</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="trend-indicator trend-down">
+                                        <i class="bi bi-arrow-down"></i>
+                                        <span>-3% Security Incidents</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            <div class="qr-code">
+                                <i class="bi bi-qr-code" style="font-size: 2rem;"></i>
+                            </div>
+                            <small>Mobile Analytics Access</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Key Metrics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="metric-card text-center">
+                            <i class="bi bi-people-fill text-primary" style="font-size: 2rem;"></i>
+                            <h3>15,432</h3>
+                            <p class="mb-0">Total Voters</p>
+                            <small class="text-success">+5.2% this week</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-card text-center">
+                            <i class="bi bi-check-circle-fill text-success" style="font-size: 2rem;"></i>
+                            <h3>12,891</h3>
+                            <p class="mb-0">Votes Cast</p>
+                            <small class="text-success">+12.8% this month</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-card text-center">
+                            <i class="bi bi-shield-check text-info" style="font-size: 2rem;"></i>
+                            <h3>99.7%</h3>
+                            <p class="mb-0">Security Score</p>
+                            <small class="text-info">Enhanced Protection</small>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-card text-center">
+                            <i class="bi bi-graph-up text-warning" style="font-size: 2rem;"></i>
+                            <h3>83.5%</h3>
+                            <p class="mb-0">Turnout Rate</p>
+                            <small class="text-warning">Target: 85%</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- AI Predictions -->
+                <div class="prediction-card">
+                    <h6><i class="bi bi-lightbulb"></i> AI Predictions & Insights</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <strong>Peak Voting Time:</strong><br>
+                            <span>2:00 PM - 4:00 PM</span>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Expected Turnout:</strong><br>
+                            <span>87% (Current: 83.5%)</span>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Security Threats:</strong><br>
+                            <span>Low (2 incidents today)</span>
+                        </div>
+                        <div class="col-md-3">
+                            <strong>System Performance:</strong><br>
+                            <span>Excellent (99.9% uptime)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-graph-up"></i> Real-time Voting Trends</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="votingTrendsChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-pie-chart"></i> Demographic Analysis</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="demographicChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-geo-alt"></i> Geographic Distribution</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="geographicChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5 class="mb-0"><i class="bi bi-clock-history"></i> Hourly Activity</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="chart-container">
+                                    <canvas id="hourlyChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ai-insight">
+                            <h6><i class="bi bi-robot"></i> AI Insight</h6>
+                            <p class="mb-2">Based on current trends, we predict a 15% increase in voter turnout during peak hours (2-4 PM).</p>
+                            <small>Confidence: 92%</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Analytics Table -->
+                <div class="card mt-4">
+                    <div class="card-header">
+                        <h5 class="mb-0"><i class="bi bi-table"></i> Detailed Analytics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Metric</th>
+                                        <th>Current Value</th>
+                                        <th>Previous Period</th>
+                                        <th>Change</th>
+                                        <th>Trend</th>
+                                        <th>Prediction</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Voter Registration</td>
+                                        <td>15,432</td>
+                                        <td>14,678</td>
+                                        <td class="text-success">+5.2%</td>
+                                        <td><i class="bi bi-arrow-up text-success"></i></td>
+                                        <td>16,200 (Next Week)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Votes Cast</td>
+                                        <td>12,891</td>
+                                        <td>11,445</td>
+                                        <td class="text-success">+12.8%</td>
+                                        <td><i class="bi bi-arrow-up text-success"></i></td>
+                                        <td>13,500 (Next Week)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Security Incidents</td>
+                                        <td>2</td>
+                                        <td>5</td>
+                                        <td class="text-danger">-60%</td>
+                                        <td><i class="bi bi-arrow-down text-danger"></i></td>
+                                        <td>1 (Next Week)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>System Uptime</td>
+                                        <td>99.9%</td>
+                                        <td>99.7%</td>
+                                        <td class="text-success">+0.2%</td>
+                                        <td><i class="bi bi-arrow-up text-success"></i></td>
+                                        <td>99.95% (Next Week)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize voting trends chart
+        function initializeVotingTrendsChart() {
+            const ctx = document.getElementById('votingTrendsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Voter Registrations',
+                        data: [1200, 1350, 1420, 1580, 1620, 1750, 1820, 1950, 2100, 2250, 2400, 2580],
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Votes Cast',
+                        data: [980, 1120, 1250, 1380, 1450, 1580, 1650, 1780, 1920, 2050, 2180, 2350],
+                        borderColor: '#28a745',
+                        backgroundColor: 'rgba(40, 167, 69, 0.1)',
+                        tension: 0.4
+                    }, {
+                        label: 'Security Incidents',
+                        data: [8, 6, 5, 4, 3, 2, 2, 1, 1, 2, 1, 2],
+                        borderColor: '#ff6b6b',
+                        backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                        tension: 0.4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize demographic chart
+        function initializeDemographicChart() {
+            const ctx = document.getElementById('demographicChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['18-25', '26-35', '36-45', '46-55', '56-65', '65+'],
+                    datasets: [{
+                        data: [25, 30, 20, 15, 7, 3],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#28a745',
+                            '#ffc107',
+                            '#fd7e14',
+                            '#6f42c1',
+                            '#e83e8c'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize geographic chart
+        function initializeGeographicChart() {
+            const ctx = document.getElementById('geographicChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Mumbai', 'Delhi', 'Bangalore', 'Chennai', 'Kolkata'],
+                    datasets: [{
+                        label: 'Voter Distribution',
+                        data: [3200, 2800, 2400, 2000, 1800],
+                        backgroundColor: [
+                            '#4361ee',
+                            '#28a745',
+                            '#ffc107',
+                            '#fd7e14',
+                            '#6f42c1'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize hourly activity chart
+        function initializeHourlyChart() {
+            const ctx = document.getElementById('hourlyChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['6AM', '8AM', '10AM', '12PM', '2PM', '4PM', '6PM', '8PM'],
+                    datasets: [{
+                        label: 'Voting Activity',
+                        data: [50, 120, 200, 350, 450, 380, 250, 100],
+                        borderColor: '#4361ee',
+                        backgroundColor: 'rgba(67, 97, 238, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Real-time data updates
+        function updateAnalytics() {
+            // Simulate real-time data updates
+            const metrics = document.querySelectorAll('.metric-card h3');
+            metrics.forEach((metric, index) => {
+                const currentValue = parseInt(metric.textContent.replace(/,/g, ''));
+                const increment = Math.floor(Math.random() * 10) + 1;
+                metric.textContent = (currentValue + increment).toLocaleString();
+            });
+        }
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeVotingTrendsChart();
+            initializeDemographicChart();
+            initializeGeographicChart();
+            initializeHourlyChart();
+            
+            // Update analytics every 30 seconds
+            setInterval(updateAnalytics, 30000);
+        });
+    </script>
+</body>
+</html> 

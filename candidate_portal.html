@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Candidate Portal | Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .voter-details-modal .modal-body {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        .voter-details-modal .detail-group {
+            margin-bottom: 1rem;
+        }
+        .voter-details-modal .detail-label {
+            font-weight: 600;
+            color: #495057;
+        }
+        .voter-photo-lg {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto;
+            display: block;
+        }
+        .aadhar-photo {
+            max-width: 100%;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row header">
+            <div class="col-12">
+                <h1>Secure Voting System</h1>
+                <p class="blockchain-info">Powered by Secure Network | Immutable | Transparent | Secure</p>
+            </div>
+        </div>
+
+        <div class="row main-content">
+            <!-- Left Navigation -->
+            <div class="col-md-3 left-nav">
+                <a href="add_candidate.html" class="nav-item">
+                    <i class="bi bi-person-plus"></i> Add Candidate
+                </a>
+                <a href="candidate_portal.html" class="nav-item active">
+                    <i class="bi bi-people"></i> Candidate Portal
+                </a>
+                <a href="user_info.html" class="nav-item">
+                    <i class="bi bi-person-badge"></i> User Information
+                </a>
+                <a href="blockchain_info.html" class="nav-item">
+                    <i class="bi bi-link-45deg"></i> Network Info
+                </a>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="col-md-9 content-area">
+                <h2><i class="bi bi-people"></i> Candidate Portal</h2>
+                
+                <!-- Candidate Statistics -->
+                <div class="row mb-4">
+                    <div class="col-md-3">
+                        <div class="card bg-primary text-white">
+                            <div class="card-body text-center">
+                                <h3 id="totalCandidates">0</h3>
+                                <p class="mb-0">Total Candidates</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success text-white">
+                            <div class="card-body text-center">
+                                <h3 id="activeCandidates">0</h3>
+                                <p class="mb-0">Active Candidates</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-info text-white">
+                            <div class="card-body text-center">
+                                <h3 id="recentCandidates">0</h3>
+                                <p class="mb-0">Recent Registrations</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning text-white">
+                            <div class="card-body text-center">
+                                <h3 id="partiesCount">0</h3>
+                                <p class="mb-0">Political Parties</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h4 class="mb-0">Registered Candidates</h4>
+                            <div class="search-bar">
+                                <input type="text" class="form-control" placeholder="Search candidates..." id="candidateSearch">
+                            </div>
+                        </div>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Candidate ID</th>
+                                        <th>Name</th>
+                                        <th>Party</th>
+                                        <th>Constituency</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="candidateTableBody">
+                                    <!-- Candidates will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <nav aria-label="Candidate pagination">
+                            <ul class="pagination justify-content-center" id="candidatePagination">
+                                <!-- Pagination will be loaded here -->
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Candidate Details Modal -->
+    <div class="modal fade" id="candidateDetailsModal" tabindex="-1" aria-labelledby="candidateDetailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg voter-details-modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="candidateDetailsModalLabel">Candidate Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="candidateDetailsContent">
+                    <!-- Candidate details will be loaded here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Sample candidate data - in real app, this would come from your backend
+        let candidates = [
+            {
+                id: "CAN12345678",
+                firstName: "Rajesh",
+                lastName: "Kumar",
+                fullName: "Rajesh Kumar",
+                age: 45,
+                gender: "Male",
+                dob: "1978-03-15",
+                aadharNumber: "123456789012",
+                photo: "data:image/jpeg;base64,...",
+                aadharPhoto: "data:image/jpeg;base64,...",
+                registeredDate: "2023-01-10",
+                address: "123 Main Street, Mumbai, Maharashtra",
+                phone: "+91-9876543210",
+                email: "rajesh.kumar@email.com",
+                constituency: "Mumbai North",
+                partyName: "BJP",
+                partyLogo: "data:image/jpeg;base64,...",
+                status: "Active",
+                candidateId: "CAN12345678"
+            },
+            {
+                id: "CAN23456789",
+                firstName: "Priya",
+                lastName: "Patel",
+                fullName: "Priya Patel",
+                age: 38,
+                gender: "Female",
+                dob: "1985-08-22",
+                aadharNumber: "234567890123",
+                photo: "data:image/jpeg;base64,...",
+                aadharPhoto: "data:image/jpeg;base64,...",
+                registeredDate: "2023-02-15",
+                address: "456 Park Avenue, Delhi, Delhi",
+                phone: "+91-8765432109",
+                email: "priya.patel@email.com",
+                constituency: "Delhi Central",
+                partyName: "Congress",
+                partyLogo: "data:image/jpeg;base64,...",
+                status: "Active",
+                candidateId: "CAN23456789"
+            }
+        ];
+
+        // Render candidate table
+        function renderCandidateTable(data = candidates) {
+            const tbody = document.getElementById('candidateTableBody');
+            tbody.innerHTML = '';
+            
+            data.forEach(candidate => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${candidate.candidateId}</td>
+                    <td>${candidate.fullName}</td>
+                    <td><span class="badge bg-primary">${candidate.partyName}</span></td>
+                    <td>${candidate.constituency}</td>
+                    <td><span class="badge ${candidate.status === 'Active' ? 'bg-success' : 'bg-warning'}">${candidate.status}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-primary view-details" data-id="${candidate.id}">
+                            <i class="bi bi-eye"></i> View
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(row);
+            });
+            
+            // Add event listeners to view buttons
+            document.querySelectorAll('.view-details').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const candidateId = this.getAttribute('data-id');
+                    showCandidateDetails(candidateId);
+                });
+            });
+        }
+
+        // Show candidate details in modal
+        function showCandidateDetails(candidateId) {
+            const candidate = candidates.find(c => c.id === candidateId);
+            if (!candidate) return;
+            
+            const modalContent = document.getElementById('candidateDetailsContent');
+            modalContent.innerHTML = `
+                <div class="text-center mb-4">
+                    <img src="${candidate.photo}" alt="${candidate.fullName}" class="voter-photo-lg">
+                    <h4 class="mt-2">${candidate.fullName}</h4>
+                    <p class="text-muted">Candidate ID: ${candidate.candidateId}</p>
+                    <span class="badge ${candidate.status === 'Active' ? 'bg-success' : 'bg-warning'}">${candidate.status}</span>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Full Name</div>
+                    <div class="detail-value">${candidate.fullName}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Candidate ID</div>
+                    <div class="detail-value">${candidate.candidateId}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Date of Birth</div>
+                    <div class="detail-value">${candidate.dob}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Age</div>
+                    <div class="detail-value">${candidate.age} years</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Gender</div>
+                    <div class="detail-value">${candidate.gender}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Aadhar Number</div>
+                    <div class="detail-value">${candidate.aadharNumber}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Phone Number</div>
+                    <div class="detail-value">${candidate.phone}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Email Address</div>
+                    <div class="detail-value">${candidate.email}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Address</div>
+                    <div class="detail-value">${candidate.address}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Constituency</div>
+                    <div class="detail-value">${candidate.constituency}</div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Political Party</div>
+                    <div class="detail-value">
+                        <span class="badge bg-primary">${candidate.partyName}</span>
+                    </div>
+                </div>
+                
+                <div class="detail-group">
+                    <div class="detail-label">Registered Date</div>
+                    <div class="detail-value">${candidate.registeredDate}</div>
+                </div>
+                
+                <div class="detail-group" style="grid-column: span 2;">
+                    <div class="detail-label">Aadhar Card Photo</div>
+                    <div class="detail-value">
+                        <img src="${candidate.aadharPhoto}" alt="Aadhar Card" class="aadhar-photo">
+                    </div>
+                </div>
+            `;
+            
+            const modal = new bootstrap.Modal(document.getElementById('candidateDetailsModal'));
+            modal.show();
+        }
+
+        // Search functionality
+        document.getElementById('candidateSearch').addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const filteredCandidates = candidates.filter(candidate => 
+                candidate.fullName.toLowerCase().includes(searchTerm) || 
+                candidate.candidateId.toLowerCase().includes(searchTerm) ||
+                candidate.partyName.toLowerCase().includes(searchTerm) ||
+                candidate.constituency.toLowerCase().includes(searchTerm)
+            );
+            renderCandidateTable(filteredCandidates);
+        });
+
+        // Calculate and display statistics
+        function updateStatistics() {
+            const totalCandidates = candidates.length;
+            const activeCandidates = candidates.filter(c => c.status === 'Active').length;
+            const recentCandidates = candidates.filter(c => {
+                const regDate = new Date(c.registeredDate);
+                const thirtyDaysAgo = new Date();
+                thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+                return regDate > thirtyDaysAgo;
+            }).length;
+            const uniqueParties = [...new Set(candidates.map(c => c.partyName))].length;
+            
+            document.getElementById('totalCandidates').textContent = totalCandidates;
+            document.getElementById('activeCandidates').textContent = activeCandidates;
+            document.getElementById('recentCandidates').textContent = recentCandidates;
+            document.getElementById('partiesCount').textContent = uniqueParties;
+        }
+
+        // Function to add new candidate
+        function addCandidate(candidateData) {
+            const newCandidate = {
+                id: Date.now().toString(),
+                firstName: candidateData.firstName,
+                lastName: candidateData.lastName,
+                fullName: candidateData.firstName + ' ' + candidateData.lastName,
+                age: calculateAge(candidateData.dateOfBirth),
+                gender: candidateData.gender,
+                dob: candidateData.dateOfBirth,
+                aadharNumber: candidateData.aadharNumber,
+                photo: "data:image/jpeg;base64,...", // Default placeholder
+                aadharPhoto: "data:image/jpeg;base64,...", // Default placeholder
+                registeredDate: new Date().toISOString().split('T')[0],
+                address: candidateData.address,
+                phone: candidateData.phone,
+                email: candidateData.email,
+                constituency: candidateData.constituency,
+                partyName: candidateData.partyName,
+                partyLogo: "data:image/jpeg;base64,...", // Default placeholder
+                status: "Active",
+                candidateId: candidateData.candidateId
+            };
+            
+            candidates.push(newCandidate);
+            renderCandidateTable();
+            updateStatistics();
+        }
+
+        function calculateAge(dateOfBirth) {
+            const today = new Date();
+            const birthDate = new Date(dateOfBirth);
+            let age = today.getFullYear() - birthDate.getFullYear();
+            const monthDiff = today.getMonth() - birthDate.getMonth();
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
+                age--;
+            }
+            return age;
+        }
+
+        // Load candidates from localStorage
+        function loadCandidatesFromStorage() {
+            const storedCandidates = JSON.parse(localStorage.getItem('candidates') || '[]');
+            storedCandidates.forEach(candidateData => {
+                const newCandidate = {
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 9),
+                    firstName: candidateData.firstName,
+                    lastName: candidateData.lastName,
+                    fullName: candidateData.firstName + ' ' + candidateData.lastName,
+                    age: calculateAge(candidateData.dateOfBirth),
+                    gender: candidateData.gender,
+                    dob: candidateData.dateOfBirth,
+                    aadharNumber: candidateData.aadharNumber,
+                    photo: "data:image/jpeg;base64,...", // Default placeholder
+                    aadharPhoto: "data:image/jpeg;base64,...", // Default placeholder
+                    registeredDate: new Date().toISOString().split('T')[0],
+                    address: candidateData.address,
+                    phone: candidateData.phone,
+                    email: candidateData.email,
+                    constituency: candidateData.constituency,
+                    partyName: candidateData.partyName,
+                    partyLogo: "data:image/jpeg;base64,...", // Default placeholder
+                    status: "Active",
+                    candidateId: candidateData.candidateId
+                };
+                
+                // Check if candidate already exists
+                const exists = candidates.find(c => c.candidateId === newCandidate.candidateId);
+                if (!exists) {
+                    candidates.push(newCandidate);
+                }
+            });
+        }
+
+        // Initialize the table and statistics
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCandidatesFromStorage();
+            renderCandidateTable();
+            updateStatistics();
+        });
+    </script>
+</body>
+</html>

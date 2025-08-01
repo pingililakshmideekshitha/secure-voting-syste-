@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Voter Registration</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4361ee;
+      --secondary: #3f37c9;
+      --error: #f72585;
+      --success: #4cc9f0;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .container {
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 700px;
+      overflow: hidden;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    .form-container {
+      padding: 30px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #555;
+    }
+    input, button {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+    input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      outline: none;
+    }
+    button {
+      background: var(--primary);
+      color: white;
+      font-weight: 500;
+      cursor: pointer;
+      border: none;
+      margin-top: 10px;
+    }
+    button:hover {
+      background: var(--secondary);
+      transform: translateY(-2px);
+    }
+    .photo-preview {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 2px dashed #ddd;
+      display: none;
+      margin-top: 10px;
+    }
+    .error {
+      color: var(--error);
+      font-size: 14px;
+      margin-top: 5px;
+    }
+    .success-message {
+      display: none;
+      text-align: center;
+      padding: 30px;
+    }
+    .success-message h2 {
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    .voter-id-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border-radius: 12px;
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 400px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      border: 1px solid #eee;
+      text-align: center;
+    }
+    .voter-id-card h3 {
+      color: var(--primary);
+      margin-bottom: 15px;
+    }
+    .voter-id-card p {
+      margin: 8px 0;
+    }
+    .auto-redirect {
+      margin-top: 20px;
+      color: #666;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Digital Voter Registration</h1>
+      <p>Register to vote in just a few steps</p>
+    </div>
+
+    <div class="form-container" id="registrationForm">
+      <form id="voterForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" placeholder="Enter your full name" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" placeholder="10-digit mobile number" required>
+          <div class="error" id="phoneError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+          <div class="error" id="emailError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" required>
+          <div class="error" id="ageError"></div>
+        </div>
+
+        <div class="form-group">
+          <label for="age">Age</label>
+          <input type="number" id="age" readonly>
+        </div>
+
+        <div class="form-group">
+          <label for="voterPhoto">Upload Your Photo</label>
+          <input type="file" id="voterPhoto" accept="image/*" required>
+          <img id="voterPhotoPreview" class="photo-preview" alt="Voter Photo Preview">
+        </div>
+
+        <div class="form-group">
+          <label for="aadhaarPhoto">Upload Aadhaar Card</label>
+          <input type="file" id="aadhaarPhoto" accept="image/*,.pdf" required>
+          <img id="aadhaarPhotoPreview" class="photo-preview" alt="Aadhaar Preview">
+        </div>
+
+        <button type="submit" id="submitBtn">Register Now</button>
+      </form>
+    </div>
+
+    <div class="success-message" id="successMessage">
+      <h2>Registration Successful!</h2>
+      <p>Your voter registration has been submitted for verification.</p>
+      
+      <div class="voter-id-card">
+        <h3>Your Voter ID</h3>
+        <p><strong>Name:</strong> <span id="displayName"></span></p>
+        <p><strong>Voter ID:</strong> <span id="displayVoterId"></span></p>
+        <p><strong>Reference No:</strong> <span id="displayRefNo"></span></p>
+      </div>
+      
+      <div class="auto-redirect" id="countdown">
+        Redirecting to login page in <span id="countdownNumber">5</span> seconds...
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // DOM Elements
+    const dobInput = document.getElementById('dob');
+    const ageInput = document.getElementById('age');
+    const voterForm = document.getElementById('voterForm');
+    const registrationForm = document.getElementById('registrationForm');
+    const successMessage = document.getElementById('successMessage');
+    const voterPhotoInput = document.getElementById('voterPhoto');
+    const aadhaarPhotoInput = document.getElementById('aadhaarPhoto');
+    const voterPhotoPreview = document.getElementById('voterPhotoPreview');
+    const aadhaarPhotoPreview = document.getElementById('aadhaarPhotoPreview');
+    const countdownElement = document.getElementById('countdownNumber');
+
+    // Auto-calculate age
+    dobInput.addEventListener('change', function() {
+      const dob = new Date(this.value);
+      const today = new Date();
+      let age = today.getFullYear() - dob.getFullYear();
+      const monthDiff = today.getMonth() - dob.getMonth();
+      
+      if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+        age--;
+      }
+      
+      ageInput.value = age;
+      
+      // Validate age
+      if (age < 18) {
+        document.getElementById('ageError').textContent = "You must be 18+ to register";
+      } else {
+        document.getElementById('ageError').textContent = "";
+      }
+    });
+
+    // Preview uploaded photos
+    voterPhotoInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          voterPhotoPreview.src = event.target.result;
+          voterPhotoPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    aadhaarPhotoInput.addEventListener('change', function(e) {
+      const file = e.target.files[0];
+      if (file && file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          aadhaarPhotoPreview.src = event.target.result;
+          aadhaarPhotoPreview.style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        aadhaarPhotoPreview.style.display = 'none';
+      }
+    });
+
+    // Form submission
+    voterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Validate phone number
+      const phone = document.getElementById('phone').value;
+      if (!/^\d{10}$/.test(phone)) {
+        document.getElementById('phoneError').textContent = "Invalid phone number";
+        return;
+      }
+
+      // Validate email
+      const email = document.getElementById('email').value;
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        document.getElementById('emailError').textContent = "Invalid email address";
+        return;
+      }
+
+      // Simulate API call (replace with actual fetch() in production)
+      setTimeout(() => {
+        // Generate fake voter ID
+        const refNumber = 'REF-' + Math.random().toString(36).substr(2, 8).toUpperCase();
+        const voterId = 'STATE/' + new Date().getFullYear() + '/' + 
+                       Math.floor(1000000 + Math.random() * 9000000);
+        
+        // Show success message
+        document.getElementById('displayName').textContent = document.getElementById('name').value;
+        document.getElementById('displayVoterId').textContent = voterId;
+        document.getElementById('displayRefNo').textContent = refNumber;
+        
+        registrationForm.style.display = 'none';
+        successMessage.style.display = 'block';
+        
+        // Start countdown for redirect
+        let countdown = 5;
+        const countdownInterval = setInterval(() => {
+          countdown--;
+          countdownElement.textContent = countdown;
+          
+          if (countdown <= 0) {
+            clearInterval(countdownInterval);
+            // Redirect to login page (in a real app, this would be the login page URL)
+            window.location.href = "voter_login.html"; 
+          }
+        }, 1000);
+      }, 1500);
+    });
+  </script>
+</body>
+</html>

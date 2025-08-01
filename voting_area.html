@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Polling Booth | Voting System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        .party-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+        .party-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        .party-card.selected {
+            border-color: #4361ee;
+            background-color: rgba(67, 97, 238, 0.05);
+        }
+        .party-logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+            margin: 0 auto;
+            display: block;
+        }
+        #confirmationModal .modal-body {
+            text-align: center;
+        }
+        #confirmationModal .party-logo-lg {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+        }
+        .voter-info {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0"><i class="bi bi-check2-square"></i> Polling Booth</h3>
+            </div>
+            <div class="card-body">
+                <div class="voter-info">
+                    <h5><i class="bi bi-person-badge"></i> Voter Information</h5>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Voter ID:</strong> <span id="displayVoterId" class="text-primary fw-bold"></span></p>
+                            <p class="mb-1"><strong>Status:</strong> <span class="text-success">✓ Verified</span></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-1"><strong>Login Time:</strong> <span id="loginTime"></span></p>
+                            <p class="mb-0"><strong>Session:</strong> <span class="text-info">Active</span></p>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="mb-0 text-muted"><i class="bi bi-info-circle"></i> Please select your preferred party to cast your vote</p>
+                </div>
+
+                <div class="alert alert-info">
+                    <i class="bi bi-info-circle"></i> Your vote is anonymous and will be recorded securely on the network.
+                </div>
+
+                <h4 class="mb-4">Select a Political Party:</h4>
+                
+                <div class="row g-4">
+                    <!-- BJP -->
+                    <div class="col-md-4">
+                        <div class="card party-card h-100" data-party="bjp">
+                            <div class="card-body text-center">
+                                <img src="bjp.jpeg" 
+                                     alt="BJP Logo" class="party-logo mb-3">
+                                <h5>Bharatiya Janata Party</h5>
+                                <p class="text-muted">BJP</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TRS -->
+                    <div class="col-md-4">
+                        <div class="card party-card h-100" data-party="trs">
+                            <div class="card-body text-center">
+                                <img src="trs,jpeg" 
+                                     alt="TRS Logo" class="party-logo mb-3">
+                                <h5>Telangana Rashtra Samithi</h5>
+                                <p class="text-muted">TRS</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Congress -->
+                    <div class="col-md-4">
+                        <div class="card party-card h-100" data-party="congress">
+                            <div class="card-body text-center">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Indian_National_Congress_hand_logo.svg/640px-Indian_National_Congress_hand_logo.svg.png" 
+                                     alt="Congress Logo" class="party-logo mb-3">
+                                <h5>Indian National Congress</h5>
+                                <p class="text-muted">INC</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- TDP -->
+                    <div class="col-md-4">
+                        <div class="card party-card h-100" data-party="tdp">
+                            <div class="card-body text-center">
+                                <img src="tdp.jpeg" 
+                                     alt="TDP Logo" class="party-logo mb-3">
+                                <h5>Telugu Desam Party</h5>
+                                <p class="text-muted">TDP</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- YSRCP -->
+                    <div class="col-md-4">
+                        <div class="card party-card h-100" data-party="ysrcp">
+                            <div class="card-body text-center">
+                                <img src="ysrcp.jpg" 
+                                     alt="YSRCP Logo" class="party-logo mb-3">
+                                <h5>YSR Congress Party</h5>
+                                <p class="text-muted">YSRCP</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Others -->
+                    <div class="col-md-4">
+                        <div class="card party-card h-100" data-party="others">
+                            <div class="card-body text-center">
+                                
+                                <h5>Other Parties</h5>
+                                <p class="text-muted">OTHERS</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <button class="btn btn-primary btn-lg px-5" id="submitVoteBtn" disabled>
+                        <i class="bi bi-check-circle"></i> Submit Vote
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Your Vote</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <img id="selectedPartyLogo" src="" alt="Party Logo" class="party-logo-lg">
+                    <h4 id="selectedPartyName" class="mb-2"></h4>
+                    <p class="text-muted mb-4" id="selectedPartyCode"></p>
+                    <div class="alert alert-warning">
+                        <i class="bi bi-exclamation-triangle"></i> Once submitted, your vote cannot be changed!
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmVoteBtn">
+                        <i class="bi bi-check-circle"></i> Confirm & Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body text-center p-5">
+                    <div class="mb-4">
+                        <i class="bi bi-check-circle-fill text-success" style="font-size: 4rem;"></i>
+                    </div>
+                    <h4 class="mb-3">Vote Submitted Successfully!</h4>
+                    <p class="mb-4">Your vote has been securely recorded on the network.</p>
+                    <p class="text-muted small">Transaction Hash: <span id="transactionHash" class="d-block text-truncate">0x123...abc</span></p>
+                    <div class="mt-4">
+                        <a href="candidate_portal.html" class="btn btn-outline-primary me-2">
+                            <i class="bi bi-person-plus"></i> Register Another Candidate
+                        </a>
+                        <a href="indexx.html" class="btn btn-primary">
+                            <i class="bi bi-house"></i> Go to Home
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Display voter ID
+            const voterId = sessionStorage.getItem('voterId');
+            document.getElementById('displayVoterId').textContent = voterId || 'Not Available';
+            
+            // Display login time
+            const now = new Date();
+            const loginTime = now.toLocaleString();
+            document.getElementById('loginTime').textContent = loginTime;
+            
+            let selectedParty = null;
+            const partyCards = document.querySelectorAll('.party-card');
+            const submitVoteBtn = document.getElementById('submitVoteBtn');
+            const confirmationModal = new bootstrap.Modal(document.getElementById('confirmationModal'));
+            const successModal = new bootstrap.Modal(document.getElementById('successModal'));
+            
+            // Party selection
+            partyCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selected class from all cards
+                    partyCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selected class to clicked card
+                    this.classList.add('selected');
+                    selectedParty = this.getAttribute('data-party');
+                    submitVoteBtn.disabled = false;
+                });
+            });
+            
+            // Submit vote button
+            submitVoteBtn.addEventListener('click', function() {
+                if (!selectedParty) return;
+                
+                // Update confirmation modal with selected party info
+                const selectedCard = document.querySelector(`.party-card[data-party="${selectedParty}"]`);
+                const partyName = selectedCard.querySelector('h5').textContent;
+                const partyCode = selectedCard.querySelector('p').textContent;
+                const partyLogo = selectedCard.querySelector('img').src;
+                
+                document.getElementById('selectedPartyLogo').src = partyLogo;
+                document.getElementById('selectedPartyName').textContent = partyName;
+                document.getElementById('selectedPartyCode').textContent = partyCode;
+                
+                // Show confirmation modal
+                confirmationModal.show();
+            });
+            
+            // Confirm vote button
+            document.getElementById('confirmVoteBtn').addEventListener('click', function() {
+                confirmationModal.hide();
+                submitVoteBtn.disabled = true;
+                submitVoteBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Processing...';
+                
+                // Simulate blockchain transaction (replace with actual blockchain call)
+                setTimeout(() => {
+                    // In a real implementation, you would call:
+                    // blockchainManager.castVote(voterId, selectedParty)
+                    
+                    // Generate a fake transaction hash for demo
+                    const txHash = '0x' + Math.random().toString(16).substr(2, 64);
+                    document.getElementById('transactionHash').textContent = txHash;
+                    
+                    // Show success modal
+                    successModal.show();
+                    
+                                         // Don't auto-redirect, let user choose
+                     // setTimeout(() => {
+                     //     window.location.href = 'indexx.html';
+                     // }, 3000);
+                }, 2000);
+            });
+            
+            // Redirect when success modal is closed
+            document.getElementById('successModal').addEventListener('hidden.bs.modal', function () {
+                window.location.href = 'indexx.html';
+            });
+        });
+    </script>
+</body>
+</html>
